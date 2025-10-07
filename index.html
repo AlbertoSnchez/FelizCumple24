@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title> Happy birthday Card</title>
   <link rel="stylesheet" href="./style.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -20,6 +20,87 @@
 			<p class="text-right">CA ♥</p>
 		</div>
 	</div>
+
+<audio id="backgroundAudio" src="music.mp3" muted loop></audio> 
+
+<button id="floatingMusicToggle" class="is-paused">
+    <i id="musicIcon" class="fas fa-play fa-volume-xmark"></i> 
+</button>
+
+<script>
+    const audio = document.getElementById('backgroundAudio');
+    const button = document.getElementById('floatingMusicToggle');
+    const icon = document.getElementById('musicIcon');
+
+    // Estado inicial: Pausa y Mute.
+    let isPlaying = false;
+
+    // NOTA: Asegúrate de que tu botón HTML tenga la clase 'is-paused' para el estilo inicial:
+    // <button id="floatingMusicToggle" class="is-paused"> ... </button>
+
+    function updateIcon() {
+        // 1. Limpiar clases de Font Awesome para el cambio
+        icon.className = ''; 
+
+        // 2. Estado de Play/Pause (icono principal)
+        if (isPlaying) {
+            // Está sonando -> Mostrar PAUSE
+            icon.classList.add('fas', 'fa-pause');
+            button.classList.remove('is-paused');
+            button.classList.add('is-playing');
+        } else {
+            // Está pausado -> Mostrar PLAY
+            icon.classList.add('fas', 'fa-play');
+            button.classList.remove('is-playing');
+            button.classList.add('is-paused');
+        }
+
+        // 3. Estado de Mute/Unmute (icono secundario)
+        if (audio.muted) {
+            // Está silenciado -> Mostrar MUTE (x-mark)
+            icon.classList.add('fa-volume-xmark');
+        } else {
+            // No está silenciado -> Mostrar VOLUME UP
+            icon.classList.add('fa-volume-up');
+        }
+    }
+
+    function toggleAudio() {
+        // 1. Si está pausado (o es la primera vez)
+        if (audio.paused) {
+            // Des-silenciar si está muteado (requisito de los navegadores)
+            if (audio.muted) {
+                audio.muted = false; 
+            }
+            
+            // Intentar reproducir
+            audio.play()
+                .then(() => {
+                    isPlaying = true;
+                    updateIcon();
+                })
+                .catch(error => {
+                    // El navegador bloqueó la reproducción. Volvemos al estado inicial, esperando el segundo clic.
+                    isPlaying = false;
+                    audio.muted = true; 
+                    updateIcon(); 
+                });
+            
+        } else {
+            // 2. Si está sonando -> Pausar y silenciar
+            audio.pause();
+            audio.muted = true; // Silenciar al pausar
+            isPlaying = false;
+            updateIcon();
+        }
+    }
+
+    // Asignar el evento al botón
+    button.addEventListener('click', toggleAudio);
+
+    // Inicializar el ícono y color al cargar
+    updateIcon(); 
+</script>
 
 </body>
 </html>

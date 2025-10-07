@@ -121,3 +121,65 @@ h4 {
 .text-right {
 	text-align: right;
 }
+
+#floatingMusicToggle {
+    /* POSICIONAMIENTO FIJO: Crucial para que no afecte el flujo de la página */
+    position: fixed;
+    bottom: 20px; /* Separación del borde inferior */
+    right: 20px;  /* Separación del borde derecho */
+    z-index: 1000; /* Asegura que esté por encima de casi todo el contenido */
+
+    /* Estilo visual */
+    border: none;
+    background-color: #333; /* Gris oscuro, discreto en pausa */
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    
+    /* Tamaño y centrado del ícono */
+    width: 60px;
+    height: 60px;
+    font-size: 24px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Transiciones suaves */
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Efectos al pasar el ratón */
+#floatingMusicToggle:hover {
+    background-color: #555;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Estilos para el ícono (opcional, para asegurarnos que no tenga margen) */
+#musicIcon {
+    line-height: 1; /* Elimina cualquier espacio vertical extra */
+}
+
+
+/* ESTADOS DINÁMICOS (Para ser aplicados por JavaScript) */
+
+/* Color cuando la música está sonando (rojo vibrante) */
+.is-playing {
+    background-color: #d9534f !important; 
+}
+
+/* Color cuando la música está en pausa (verde claro, listo para tocar) */
+.is-paused {
+    background-color: #5cb85c !important; 
+}
+
+/* Media Query para Responsividad (móviles) */
+@media (max-width: 600px) {
+    #floatingMusicToggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
