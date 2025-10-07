@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="es" >
 <head>
-  <meta charset="UTF-8">
-  <title> Happy birthday Card</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <title> Happy birthday Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-<div class="card">
-		<div class="imgBox">
-			<div class="bark"></div>
-			<img src="card.jpg">
-		</div>
-		<div class="details">
-			<h4 class="color3">¡FELIZ CUMPLEAÑOS!</h2>
-			<p></p><h2>Hoy cumple años mi persona favorita, la más maravillosa, hermosa, dulce, inteligente, fantástica, alegre, especial, chula y hermosa persona que puede existir, que ilumina mi camino con su luz de luna. <br>Que este y todos los días sean especiales y bellos como tú, que Dios te siga llenando de bendiciones, logros, amor, alegría, fuerzas y siga cuidando esos ojitos tan hermosos que tienes y que tanto me encantan.<br> Muy felices 24 años, mi amor, que sea el primero de muchos cumpleaños que pueda pasar a tu hermoso lado, te mando un abrazo enorme, mis mejores deseos para ti hoy y siempre<br>PD: Esta es la página en la que estaba trabajando <br>PD 2: ¡Muchas felicidades!</h2> <br>
-			<p class="text-right">¡Te amo!</p>
-			<p class="text-right">CA ♥</p>
-		</div>
-	</div>
+<div class="card" id="myCard">
+    <div class="imgBox">
+        <div class="bark"></div>
+        <img src="card.jpg">
+    </div>
+    <div class="details">
+        <h4 class="color3">¡FELIZ CUMPLEAÑOS!</h2>
+        <p></p><h2>Hoy cumple años mi persona favorita, la más maravillosa, hermosa, dulce, inteligente, fantástica, alegre, especial, chula y hermosa persona que puede existir, que ilumina mi camino con su luz de luna. <br>Que este y todos los días sean especiales y bellos como tú, que Dios te siga llenando de bendiciones, logros, amor, alegría, fuerzas y siga cuidando esos ojitos tan hermosos que tienes y que tanto me encantan.<br> Muy felices 24 años, mi amor, que sea el primero de muchos cumpleaños que pueda pasar a tu hermoso lado, te mando un abrazo enorme, mis mejores deseos para ti hoy y siempre<br>PD: Esta es la página en la que estaba trabajando <br>PD 2: ¡Muchas felicidades!</h2> <br>
+        <p class="text-right">¡Te amo!</p>
+        <p class="text-right">CA ♥</p>
+    </div>
+</div>
 
 <audio id="backgroundAudio" src="music.mp3" muted loop></audio> 
 
@@ -31,63 +32,50 @@
     const audio = document.getElementById('backgroundAudio');
     const button = document.getElementById('floatingMusicToggle');
     const icon = document.getElementById('musicIcon');
-
+    const card = document.getElementById('myCard'); // ⬅️ Obtener la tarjeta
+    
     // Estado inicial: Pausa y Mute.
     let isPlaying = false;
 
-    // NOTA: Asegúrate de que tu botón HTML tenga la clase 'is-paused' para el estilo inicial:
-    // <button id="floatingMusicToggle" class="is-paused"> ... </button>
-
     function updateIcon() {
-        // 1. Limpiar clases de Font Awesome para el cambio
         icon.className = ''; 
 
-        // 2. Estado de Play/Pause (icono principal)
         if (isPlaying) {
-            // Está sonando -> Mostrar PAUSE
             icon.classList.add('fas', 'fa-pause');
             button.classList.remove('is-paused');
             button.classList.add('is-playing');
         } else {
-            // Está pausado -> Mostrar PLAY
             icon.classList.add('fas', 'fa-play');
             button.classList.remove('is-playing');
             button.classList.add('is-paused');
         }
 
-        // 3. Estado de Mute/Unmute (icono secundario)
         if (audio.muted) {
-            // Está silenciado -> Mostrar MUTE (x-mark)
             icon.classList.add('fa-volume-xmark');
         } else {
-            // No está silenciado -> Mostrar VOLUME UP
             icon.classList.add('fa-volume-up');
         }
     }
 
     function toggleAudio() {
-        // 1. Si está pausado (o es la primera vez)
         if (audio.paused) {
-            // Des-silenciar si está muteado (requisito de los navegadores)
             if (audio.muted) {
                 audio.muted = false; 
             }
             
-            // Intentar reproducir
             audio.play()
                 .then(() => {
                     isPlaying = true;
                     updateIcon();
                 })
                 .catch(error => {
-                    // El navegador bloqueó la reproducción. Volvemos al estado inicial, esperando el segundo clic.
+                    // El navegador bloqueó la reproducción. Volvemos al estado inicial.
                     isPlaying = false;
                     audio.muted = true; 
                     updateIcon(); 
                 });
             
         } else {
-            // 2. Si está sonando -> Pausar y silenciar
             audio.pause();
             audio.muted = true; // Silenciar al pausar
             isPlaying = false;
@@ -95,7 +83,19 @@
         }
     }
 
-    // Asignar el evento al botón
+    // ------------------------------------------------------------------
+    // ⬇️ SOLUCIÓN TÁCTIL PARA LA TARJETA (¡CLAVE PARA iOS!) ⬇️
+    // ------------------------------------------------------------------
+    card.addEventListener('click', function(e) {
+        // Asegurarse de que no estamos tocando el botón de música
+        if (!e.target.closest('#floatingMusicToggle')) {
+            card.classList.toggle('flipped'); 
+        }
+    });
+    
+    // ------------------------------------------------------------------
+
+    // Asignar el evento al botón de audio
     button.addEventListener('click', toggleAudio);
 
     // Inicializar el ícono y color al cargar

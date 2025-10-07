@@ -2,20 +2,20 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
 body {
-	font-family: 'Indie Flower', cursive !important;
-  background: #73ffde;
-	margin: 0px;
-	padding: 0px;
+    font-family: 'Indie Flower', cursive !important;
+    background: #73ffde;
+    margin: 0px;
+    padding: 0px;
 }
 
 ::selection {
-	background: transparent;
+    background: transparent;
 }
 
 h4 {
-	font-size: 60px;
-	line-height: 1px;
-	font-family: 'Amatic SC', cursive !important;
+    font-size: 60px;
+    line-height: 1px;
+    font-family: 'Amatic SC', cursive !important;
 }
 
 .color1{color:#1BBC9B}
@@ -23,157 +23,163 @@ h4 {
 
 
 .card {
-	color: #013243;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 600px;
-	height: 800px;
-	background: #e0e1dc;
-	transform-style: preserve-3d;
-	transform: translate(-50%,-50%) perspective(2000px);
-	box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5);
-	transition: 1s;
+    color: #013243;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 800px;
+    background: #e0e1dc;
+    
+    /* ⬇️ PREFIJOS AÑADIDOS ⬇️ */
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    
+    -webkit-transform: translate(-50%,-50%) perspective(2000px);
+    transform: translate(-50%,-50%) perspective(2000px);
+    
+    box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5);
+    
+    -webkit-transition: 1s;
+    transition: 1s;
 }
 
-.card:hover {
-	transform: translate(-50%,-50%) perspective(2000px) rotate(15deg) scale(1.2);
-	box-shadow: inset 20px 0 50px rgba(0,0,0,.5), 0 10px 100px rgba(0,0,0,.5);
+/* ⬇️ Se añade la clase .flipped para que funcione al tocar en iOS ⬇️ */
+.card:hover, .card.flipped {
+    -webkit-transform: translate(-50%,-50%) perspective(2000px) rotate(15deg) scale(1.2);
+    transform: translate(-50%,-50%) perspective(2000px) rotate(15deg) scale(1.2);
+    box-shadow: inset 20px 0 50px rgba(0,0,0,.5), 0 10px 100px rgba(0,0,0,.5);
 }
 
 .card:before {
-	content:'';
-	position: absolute;
-	top: -5px;
-	left: 0;
-	width: 100%;
-	height: 5px;
-	background: #BAC1BA;
-	transform-origin: bottom;
-	transform: skewX(-45deg);
+    content:'';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #BAC1BA;
+    transform-origin: bottom;
+    transform: skewX(-45deg);
 }
 
 .card:after {
-	content: '';
-	position: absolute;
-	top: 0;
-	right: -5px;
-	width: 5px;
-	height: 100%;
-	background: #92A29C;
-	transform-origin: left;
-	transform: skewY(-45deg);
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 5px;
+    height: 100%;
+    background: #92A29C;
+    transform-origin: left;
+    transform: skewY(-45deg);
 }
 
 .card .imgBox {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	transform-origin: left;
-	transition: .7s;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+    /* ⬇️ PREFIJOS AÑADIDOS ⬇️ */
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    
+    -webkit-transition: .7s;
+    transition: .7s;
 }
 
 .card .bark {
-	position: absolute;
-	background: #e0e1dc;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	transition: .7s;
+    position: absolute;
+    background: #e0e1dc;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    -webkit-transition: .7s; /* ⬇️ PREFIJO AÑADIDO ⬇️ */
+    transition: .7s;
 }
 
 .card .imgBox img {
-	min-width: 600px;
-	max-height: 800px;
+    min-width: 600px;
+    max-height: 800px;
 }
 
-.card:hover .imgBox {
-	transform: rotateY(-135deg);
+/* ⬇️ Se añade la clase .flipped para que funcione al tocar en iOS ⬇️ */
+.card:hover .imgBox, .card.flipped .imgBox {
+    -webkit-transform: rotateY(-135deg); /* ⬅️ CRÍTICO */
+    transform: rotateY(-135deg);
 }
 
-.card:hover .bark {
-	opacity: 1;
-	transition: .6s;
-  box-shadow: 300px 200px 100px rgba(0, 0, 0, .4) inset;
+/* ⬇️ Se añade la clase .flipped para que funcione al tocar en iOS ⬇️ */
+.card:hover .bark, .card.flipped .bark {
+    opacity: 1;
+    -webkit-transition: .6s; /* ⬇️ PREFIJO AÑADIDO ⬇️ */
+    transition: .6s;
+    box-shadow: 300px 200px 100px rgba(0, 0, 0, .4) inset;
 }
 
 .card .details {
-	position: absolute;
-	top: 0;
-	left: 0;
-	box-sizing: border-box;
-	padding: 0 0 0 10px;
-	z-index: -1;
-	margin-top: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 0 0 0 10px;
+    z-index: -1;
+    margin-top: 70px;
 }
 
 .card .details p {
-	font-size: 30px;
-	line-height: 5px;
-	transform: rotate(-10deg);
-	padding: 0 0 0 20px;
+    font-size: 30px;
+    line-height: 5px;
+    transform: rotate(-10deg);
+    padding: 0 0 0 20px;
 }
 
 .card .details h4 {
-	text-align: center;
+    text-align: center;
 }
 
 .text-right {
-	text-align: right;
+    text-align: right;
 }
 
+/* Botón de Música (Sin cambios, ya que tu código era bueno) */
 #floatingMusicToggle {
-    /* POSICIONAMIENTO FIJO: Crucial para que no afecte el flujo de la página */
     position: fixed;
-    bottom: 20px; /* Separación del borde inferior */
-    right: 20px;  /* Separación del borde derecho */
-    z-index: 1000; /* Asegura que esté por encima de casi todo el contenido */
-
-    /* Estilo visual */
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
     border: none;
-    background-color: #333; /* Gris oscuro, discreto en pausa */
+    background-color: #333;
     color: white;
     cursor: pointer;
     border-radius: 50%;
-    
-    /* Tamaño y centrado del ícono */
     width: 60px;
     height: 60px;
     font-size: 24px; 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* Transiciones suaves */
     transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Efectos al pasar el ratón */
 #floatingMusicToggle:hover {
     background-color: #555;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Estilos para el ícono (opcional, para asegurarnos que no tenga margen) */
 #musicIcon {
-    line-height: 1; /* Elimina cualquier espacio vertical extra */
+    line-height: 1;
 }
 
-
-/* ESTADOS DINÁMICOS (Para ser aplicados por JavaScript) */
-
-/* Color cuando la música está sonando (rojo vibrante) */
 .is-playing {
     background-color: #d9534f !important; 
 }
 
-/* Color cuando la música está en pausa (verde claro, listo para tocar) */
 .is-paused {
     background-color: #5cb85c !important; 
 }
 
-/* Media Query para Responsividad (móviles) */
 @media (max-width: 600px) {
     #floatingMusicToggle {
         width: 50px;
